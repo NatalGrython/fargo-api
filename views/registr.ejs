@@ -1,0 +1,32 @@
+<% include layOut/header.ejs %>
+
+ <form method="post" class="registr">
+	<div>
+      <label for="name">ФИО</label>
+      <br>
+      <input type="text" id= "name" name="name" required>
+    </div>
+	<hr>
+    <div>
+      <label for="email">Адрес эл.почты</label>
+      <br>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <hr>
+	<div>
+      <label for="pass">Придумайте пароль</label>
+      <br>
+      <input type="password" id="pass" name="pass" required>
+  </div>
+  <hr>
+    <div>
+      <label for="valpass">Повторите пароль</label>
+      <br>
+      <input type="password" id="valpass" name="valpass" required>
+  </div>
+    <hr>
+    <div id='registr-button'><button type="submit">Отправить</button></div> 
+</form> 
+
+
+<% include layOut/footer.ejs %>

@@ -1,0 +1,23 @@
+<% include layOut/header.ejs %>
+
+
+ <form method="post">
+
+	<div>
+      <label for="login">Ваш логин</label>
+      <br>
+      <input type="text" id="login" name="login" required>
+    </div>
+	<hr>
+    <div>
+      <label for="password">Ваш пароль</label>
+      <br>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <hr>
+    <html> Вы еще не зарегистрированы? <a href="/registr"> Регистрация </a></html>
+    <hr>
+    <div id='login-button'><button type="submit">Отправить</button></div> 
+</form> 
+
+<% include layOut/footer.ejs %>

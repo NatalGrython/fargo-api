@@ -1,0 +1,17 @@
+<% include layOut/header_auth.ejs %>
+
+<% include layOut/left_menu.ejs %>
+<ul style=" top: 500px;">
+    <li>
+        <%= user.login %>
+    </li>
+    <li>
+        Крипто-кошелек = <%= user.token%>
+    </li>
+</ul>
+<br>
+<br>
+<form method="post">
+    <div id='get-button'><button type="submit">Расчитать кол-во баллов</button></div> 
+</form> 
+<% include layOut/footer_auth.ejs %>

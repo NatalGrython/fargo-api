@@ -1,0 +1,24 @@
+<% include layOut/header_auth.ejs %>
+
+<% include layOut/left_menu.ejs %>
+
+    <form method="post">
+
+    <div>
+        <label for="predmet">Предмет</label>
+        <br>
+        <input type="text" id="predmet" name="predmet" required>
+      </div>
+      <hr>
+      <div>
+        <label for="balls">Баллы</label>
+        <br>
+        <input type="text" id="balls" name="balls" required>
+      </div>
+      <hr>
+    <div id='predmet-button'><button type="submit">Отправить</button></div> 
+    </form> 
+    <br>
+<br>>
+
+      <% include layOut/footer_auth.ejs %>

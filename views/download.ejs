@@ -1,0 +1,25 @@
+<% include layOut/header_auth.ejs %>
+
+<% include layOut/left_menu.ejs %>
+
+<form method="post">
+
+	<div>
+      <label for="download-name">ФИО</label>
+      <br>
+      <input type="text" id="download-name" name="download-name" required>
+    </div>
+	<hr>
+    <div>
+      <label for="download-token">Номер сертификата</label>
+          
+      <br>
+      <input type="text" id="download-token" name="download-token" required>
+    </div>
+    <hr>
+    <hr>
+    <div id='download-button'><button type="submit">Отправить</button></div> 
+</form> 
+
+
+<% include layOut/footer_auth.ejs %>
