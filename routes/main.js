@@ -1,48 +1,51 @@
 const config = require('../public/scripts/config')
 const express = require('express')
 const router = express.Router()
+const Web3 = require('web3')
+const trufcontract = require('truffle-contract')
+const path = require('path')
 
-var Web3 = require('web3');
-var contract = require('truffle-contract');
-var path = require('path');
+const provider = new Web3.providers.HttpProvider(config.HOST)
+const contractJSON = path.join(__dirname, 'build', 'contracts')
 
-var provider = new Web3.providers.HttpProvider(config.HOST);
+const contract = trufcontract(contractJSON)
+contract.setProvider(provider)
+const web3 = new Web3(provider)
 
-var contractJSON = require(path.join(config.PATH + config.contract_name + '.json' ));
-
-var contract =  contract(contractJSON);
-contract.setProvider(provider);
-var web3 = new Web3(provider);
-
-/* eslint-disable*/
 router.post('/predmet', (req, res) => {
-    console.log(req.body)
-    const myAccount = req.session.userToken
-    const predmet = req.body.predmet
-    const balls = req.body.balls
-    var admin
-    web3.eth.getAccounts().then(function(result){
-        admin = result[0];
-    }, function(error){
-        console.log(eror);
-    });
+    web3.eth.getAccounts().then(
+        function (result) {
+            admin = result[0]
+        },
+        function (error) {
+            console.log(eror)
+        }
+    )
 
-    contract.deployed().then(function(instance){
-        return instance.givetData(myAccount, balls, {from: myAccount, gas:400000});
-    }).then(function(result){
-        console.log('Оценки внесены в систему');
-        res.json({
-            ok:true,
-            predmet: predmet,
-            balls:balls
+    contract
+        .deployed()
+        .then(function (instance) {
+            return instance.givetData(myAccount, balls, {
+                from: myAccount,
+                gas: 400000,
+            })
         })
-    }, function(error){
-        res.json({
-            ok:false,
-            error:error
-        })
-    })
-
+        .then(
+            function (result) {
+                console.log('Оценки внесены в систему')
+                res.json({
+                    ok: true,
+                    predmet: predmet,
+                    balls: balls,
+                })
+            },
+            function (error) {
+                res.json({
+                    ok: false,
+                    error: error,
+                })
+            }
+        )
 })
 
 router.post('/download', (req, res) => {
@@ -52,78 +55,117 @@ router.post('/download', (req, res) => {
     const token = req.body.token
 
     var admin
-    web3.eth.getAccounts().then(function(result){
-        admin = result[0];
-    }, function(error){
-        console.log(eror);
-    });
+    web3.eth.getAccounts().then(
+        function (result) {
+            admin = result[0]
+        },
+        function (error) {
+            console.log(eror)
+        }
+    )
 
-    contract.deployed().then(function(instance){
-        return instance.setDiploms(token, {from: admin, gas:400000});
-    }).then(function(result){
-        console.log('Диплом внесен ');
-    }, function(error){
-        console.log(error);
-    })
-    
-
-    contract.deployed().then(function(instance){
-        return instance.giveDiploms(myAccount, token, {from: myAccount, gas:400000});
-    }).then(function(result){
-        console.log('Диплом был передан по адресу ' + myAccount);
-        res.json({
-            ok: true,
-            name:name,
-            address:myAccount,
-            token:token
+    contract
+        .deployed()
+        .then(function (instance) {
+            return instance.setDiploms(token, { from: admin, gas: 400000 })
         })
-    }, function(error){
-        console.log(error);
-    })
-    
+        .then(
+            function (result) {
+                console.log('Диплом внесен ')
+            },
+            function (error) {
+                console.log(error)
+            }
+        )
 
+    contract
+        .deployed()
+        .then(function (instance) {
+            return instance.giveDiploms(myAccount, token, {
+                from: myAccount,
+                gas: 400000,
+            })
+        })
+        .then(
+            function (result) {
+                console.log('Диплом был передан по адресу ' + myAccount)
+                res.json({
+                    ok: true,
+                    name: name,
+                    address: myAccount,
+                    token: token,
+                })
+            },
+            function (error) {
+                console.log(error)
+            }
+        )
 })
 
 router.post('/accaunt', async (req, res) => {
     const myAccount = req.session.userToken
 
     var admin
-    web3.eth.getAccounts().then(function(result){
-        admin = result[0];
-    }, function(error){
-        console.log(eror);
-    });
+    web3.eth.getAccounts().then(
+        function (result) {
+            admin = result[0]
+        },
+        function (error) {
+            console.log(eror)
+        }
+    )
 
-    contract.deployed().then(function(instance){
-        return instance.ballToAdmin(100000, {from: admin, gas:400000});
-    }).then(function(result){
-        console.log('Админу перечисленно '+ 10000 + ' баллов');
-    }, function(error){
-        console.log(error);
-    })
-
-    await contract.deployed().then(function(instance){
-        return instance.giveBall(myAccount, {from: myAccount, gas:400000});
-    }).then(function(result){
-        console.log('Расчет баллов для студента по адресу '+ myAccount);
-    }, function(error){
-        console.log(error);
-    })
-    contract.deployed().then(function(instance){
-        return instance.balanceOf.call(myAccount);
-    }).then(function(result){
-        console.log('Баланс контракта по адресу '+ myAccount + ' = '+ result);
-        res.json({
-            ok:true,
-            address:myAccount,
-            balance:result
+    contract
+        .deployed()
+        .then(function (instance) {
+            return instance.ballToAdmin(100000, { from: admin, gas: 400000 })
         })
-    }, function(error){
-        console.log(error);
-    })
+        .then(
+            function (result) {
+                console.log('Админу перечисленно ' + 10000 + ' баллов')
+            },
+            function (error) {
+                console.log(error)
+            }
+        )
 
+    await contract
+        .deployed()
+        .then(function (instance) {
+            return instance.giveBall(myAccount, {
+                from: myAccount,
+                gas: 400000,
+            })
+        })
+        .then(
+            function (result) {
+                console.log('Расчет баллов для студента по адресу ' + myAccount)
+            },
+            function (error) {
+                console.log(error)
+            }
+        )
+    contract
+        .deployed()
+        .then(function (instance) {
+            return instance.balanceOf.call(myAccount)
+        })
+        .then(
+            function (result) {
+                console.log(
+                    'Баланс контракта по адресу ' + myAccount + ' = ' + result
+                )
+                res.json({
+                    ok: true,
+                    address: myAccount,
+                    balance: result,
+                })
+            },
+            function (error) {
+                console.log(error)
+            }
+        )
 })
-
 
 /*
 contract.deployed().then(function(instance){

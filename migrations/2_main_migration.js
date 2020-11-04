@@ -1,5 +1,5 @@
-var MyContract = artifacts.require("Main");
+var MyContract = artifacts.require('Main')
 
-module.exports = function(deployer){
-    deployer.deploy(MyContract);
-};
+module.exports = function (deployer) {
+    deployer.deploy(MyContract)
+}

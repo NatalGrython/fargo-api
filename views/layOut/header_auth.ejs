@@ -1,35 +1,45 @@
-
-
 <html>
     <head>
-    <meta charset="utf-8">
-    <title>БС:рейтинг</title>
-    <link href="<%= assetFingerprint('/public/style/style.css') %>" rel="stylesheet">
+        <meta charset="utf-8" />
+        <title>БС:рейтинг</title>
+        <link
+            href="<%= assetFingerprint('/public/style/style.css') %>"
+            rel="stylesheet"
+        />
     </head>
     <body>
-    
-    <!-- header -->
-    <div id="header"> 
-        <div id="headerButton">
-            <% if(!user.id && !user.login) { %>
-            <a href="/login" 
-                style="text-decoration:none; 
-                        color:#42657a; 
-                        font-size:1.5em; 
-                        padding:33px;
-                        padding-top:33px;
-                        ">
-                    Вход</a>
-                    <% } else { %>
-                        <a href="/api/auth/logout" 
-                style="text-decoration:none; 
-                        color:#42657a; 
-                        font-size:1.5em; 
-                        padding:33px;
-                        padding-top:33px;
-                        ">
-                    Выход</a>
-                    <% } %>
+        <!-- header -->
+        <div id="header">
+            <div id="headerButton">
+                <% if(!user.id && !user.login) { %>
+                <a
+                    href="/login"
+                    style="
+                        text-decoration: none;
+                        color: #42657a;
+                        font-size: 1.5em;
+                        padding: 33px;
+                        padding-top: 33px;
+                    "
+                >
+                    Вход</a
+                >
+                <% } else { %>
+                <a
+                    href="/api/auth/logout"
+                    style="
+                        text-decoration: none;
+                        color: #42657a;
+                        font-size: 1.5em;
+                        padding: 33px;
+                        padding-top: 33px;
+                    "
+                >
+                    Выход</a
+                >
+                <% } %>
+            </div>
         </div>
-    </div>
-    <!--end of header-->
+        <!--end of header-->
+    </body>
+</html>
