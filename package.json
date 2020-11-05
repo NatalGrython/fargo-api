@@ -5,9 +5,13 @@
     "license": "MIT",
     "scripts": {
         "start": "truffle console",
-        "dev": "nodemon app.js"
+        "dev": "nodemon server.js"
     },
-    "dependencies": {},
+    "dependencies": {
+        "next": "^10.0.1",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
+    },
     "devDependencies": {
         "nodemon": "^1.19.4",
         "bcrypt-nodejs": "0.0.3",
