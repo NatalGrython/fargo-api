@@ -1,4 +1,4 @@
-const config = require('../public/scripts/config')
+const config = require('public/scripts/config')
 const express = require('express')
 const router = express.Router()
 const Web3 = require('web3')

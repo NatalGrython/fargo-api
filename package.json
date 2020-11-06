@@ -5,7 +5,14 @@
     "license": "MIT",
     "scripts": {
         "start": "truffle console",
-        "dev": "nodemon server.js"
+        "dev": "node server.js"
+    },
+    "nodemonConfig": {
+        "ignore": [
+            "pages/*.js",
+            "components/*.js",
+            ".next/*.js"
+        ]
     },
     "dependencies": {
         "next": "^10.0.1",

@@ -1,107 +1,40 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt-nodejs')
-const config = require('../public/scripts/config')
+const config = require('public/scripts/config')
 var Web3 = require('web3')
 var provider = new Web3.providers.HttpProvider(config.HOST)
 var web3 = new Web3(provider)
 
 /* eslint-disable*/
-router.post('/registr', async (req, res) => {
+router.post('/register', async (req, res) => {
     console.log(req.body)
-    const name = req.body.name
-    const login = req.body.login
-    const password = req.body.password
-    const passwordvalid = req.body.passwordvalid
-    var admin
-    web3.eth.getAccounts().then(
-        function (result) {
-            admin = result[0]
-        },
-        function (error) {
-            console.log(eror)
-        }
-    )
+
+    if (!req.body) {
+        res.status(400).json({
+            ok: false,
+        })
+    }
+
+    console.log('works')
+
+    const accounts = await web3.eth.getAccounts()
+
+    const admin = accounts[0]
+
     const token = await web3.eth.personal.newAccount()
+
     web3.eth.sendTransaction({
         from: admin,
         to: token,
         value: 800000000000000000,
     })
-    web3.eth.personal.unlockAccount(token)
-    if (!name || !login || !password || !passwordvalid) {
-        const fields = []
-        if (!login) fields.push('login')
-        if (!password) fields.push('pass')
-        if (!passwordvalid) fields.push('valpass')
 
-        res.json({
-            ok: false,
-            error: 'Все поля должны быть заполнены!',
-            fields: ['name', 'email', 'pass', 'valpass'],
-        })
-    } else if (login.length < 3) {
-        res.json({
-            ok: false,
-            error: 'Длина логина от 3 символов',
-            fields: ['email'],
-        })
-    } else if (!/^[a-zA-Z0-9]+$/.test(login)) {
-        res.json({
-            ok: false,
-            error: 'Только латинские буквы и цифры!',
-            fields: ['email'],
-        })
-    } else if (password !== passwordvalid) {
-        res.json({
-            ok: false,
-            error: 'Пароли не совпадают!',
-            fields: ['pass', 'valpass'],
-        })
-    } else if (password.length < 5) {
-        res.json({
-            ok: false,
-            error: 'Минимальная длина пароля 5 символов!',
-            fields: ['pass'],
-        })
-    } else {
-        models.Users.findOne({
-            login,
-        }).then(user => {
-            if (!user) {
-                bcrypt.hash(password, null, null, (err, hash) => {
-                    models.Users.create({
-                        name: name,
-                        login: login,
-                        token: token,
-                        password: hash,
-                    })
-                        .then(user => {
-                            console.log(user)
-                            req.session.userID = user.id
-                            req.session.userLogin = user.login
-                            req.session.userToken = user.token
-                            res.json({
-                                ok: true,
-                            })
-                        })
-                        .catch(err => {
-                            console.log(err)
-                            res.json({
-                                ok: false,
-                                error: 'Ошибка, попробуйте позже!',
-                            })
-                        })
-                })
-            } else {
-                res.json({
-                    ok: false,
-                    error: 'Имя занято!',
-                    fields: ['login'],
-                })
-            }
-        })
-    }
+    web3.eth.personal.unlockAccount(token)
+
+    res.status(200).json({
+        token,
+    })
 })
 
 router.post('/login', (req, res) => {

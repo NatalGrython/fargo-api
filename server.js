@@ -13,9 +13,9 @@ app.prepare().then(() => {
     server.use(bodyParser.json())
     server.use(bodyParser.urlencoded({ extended: true }))
 
-    server.get('/', (req, res) => {
-        app.render(req, res, '/', req.query)
-    })
+    // server.get('/', (req, res) => {
+    //     app.render(req, res, '/', req.query)
+    // })
 
     server.get('*', (req, res) => {
         return handle(req, res)
