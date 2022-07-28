@@ -1,6 +1,8 @@
-const signIn = (req, res) => {};
+import { Request, Response } from "express";
 
-const signUp = async (req, res) => {
+export const signIn = (req: Request, res: Response) => {};
+
+export const signUp = async (req: Request, res: Response) => {
   const { name, login, password } = req.body;
   try {
     const [admin] = await req.web3.eth.getAccounts();
@@ -21,6 +23,4 @@ const signUp = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {};
-
-module.exports = { signIn, signUp, logout };
+export const logout = (req: Request, res: Response) => {};

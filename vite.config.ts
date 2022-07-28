@@ -12,4 +12,5 @@ export default defineConfig({
       exportName: "nodeApp",
     }),
   ],
+  envPrefix: "RATING",
 });
